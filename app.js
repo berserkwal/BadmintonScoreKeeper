@@ -1,126 +1,130 @@
-const playerOneScore = document.querySelector('#player-one')
-const playerTwoScore = document.querySelector('#player-two')
+const p1Display = document.querySelector('#player-one')
+const p2Display = document.querySelector('#player-two')
 const maxSelect = document.querySelector('#max-select')
-const status = document.querySelector('.status')
-const playerOneBtn = document.querySelector('#player-uno')
-const playerTwoBtn = document.querySelector('#player-dos')
+const stat = document.querySelector('.status')
+const p1Btn = document.querySelector('#player-uno')
+const p2Btn = document.querySelector('#player-dos')
 const resetBtn = document.querySelector('#reset')
 
 let maxValue = 0
+p1Score = 0
+p2Score = 0
 
 maxSelect.addEventListener('input', function () {
-	maxValue = maxSelect.value
+	maxValue = parseInt(maxSelect.value)
 	if (maxValue == 0) {
 		maxSelect.classList.add("error")
 		return
 	} else {
 		maxSelect.classList.remove("error")
 	}
+	reset()
 })
 
-let firstValue = parseInt(playerOneScore.innerText)
-let secondValue = parseInt(playerTwoScore.innerText)
-
-playerOneBtn.addEventListener('click', function () {
+p1Btn.addEventListener('click', function () {
 	if (maxValue == 0) {
 		maxSelect.classList.add("error")
 		return
 	}
 
-	firstValue++
-	playerOneScore.innerText = firstValue.toString()
+	p1Score++
+	p1Display.innerText = p1Score.toString()
 
-	if (parseInt(maxValue) > 7) {
-		if (parseInt(playerOneScore.innerText) === parseInt(maxValue) - 1 && parseInt(playerTwoScore.innerText) === parseInt(maxValue) - 1) {
-			maxValue = (parseInt(maxValue) + 1).toString()
-			status.style.display = "block"
-			status.innerText = "(Deuce)"
-		} else if (parseInt(playerOneScore.innerText) === parseInt(maxValue) - 1) {
-			status.style.display = "block"
-			if (status.innerText === "(Deuce)") {
-				status.innerText = "(Adv. P1)"
-			} else {
-				status.innerText = "(Game Point P1)"
-			}
-		}
+	if (maxValue > 7) {
+		checkDeuce()
 	} else {
-		if (parseInt(playerOneScore.innerText) === parseInt(maxValue) - 1 && parseInt(playerTwoScore.innerText) === parseInt(maxValue) - 1) {
-			status.style.display = "block"
-			status.innerText = "(Next Point Wins)"
-		}
+		lowerCheck()
 	}
 
-	if (parseInt(playerOneScore.innerText) === parseInt(maxValue)) {
-		status.innerText = "(Winner P1)"
-		status.style.display = 'block'
-		playerOneScore.classList.toggle('winner')
-		playerTwoScore.classList.toggle('loser')
-		playerOneBtn.disabled = true
-		playerTwoBtn.disabled = true
-		playerOneBtn.classList.toggle('disabled')
-		playerTwoBtn.classList.toggle('disabled')
+	if (p1Score === maxValue) {
+		stat.style.color = "white"
+		stat.innerText = "(Game Over)"
+		stat.style.display = 'block'
+		p1Display.classList.toggle('winner')
+		p2Display.classList.toggle('loser')
+		gameOver()
 	}
 })
 
-playerTwoBtn.addEventListener('click', function () {
+p2Btn.addEventListener('click', function () {
 	if (maxValue == 0) {
 		maxSelect.classList.add("error")
 		return
 	}
 
-	secondValue++
-	playerTwoScore.innerText = secondValue.toString()
+	p2Score++
+	p2Display.innerText = p2Score.toString()
 
-	if (parseInt(maxValue) > 7) {
-		if (parseInt(playerOneScore.innerText) === parseInt(maxValue) - 1 && parseInt(playerTwoScore.innerText) === parseInt(maxValue) - 1) {
-			maxValue = (parseInt(maxValue) + 1).toString()
-			status.style.display = "block"
-			status.innerText = "(Deuce)"
-		} else if (parseInt(playerTwoScore.innerText) === parseInt(maxValue) - 1) {
-			status.style.display = "block"
-			if (status.innerText === "(Deuce)") {
-				status.innerText = "(Adv. P2)"
-			} else {
-				status.innerText = "(Game Point P2)"
-			}
-		}
+	if (maxValue > 7) {
+		checkDeuce()
 	} else {
-		if (parseInt(playerOneScore.innerText) === parseInt(maxValue) - 1 && parseInt(playerTwoScore.innerText) === parseInt(maxValue) - 1) {
-			status.style.display = "block"
-			status.innerText = "(Next Point Wins)"
-		}
+		lowerCheck()
 	}
 
-	if (parseInt(playerTwoScore.innerText) === parseInt(maxValue) && playerTwoScore.innerText !== playerOneScore.innerText) {
-		status.innerText = "(Winner P2)"
-		status.style.display = 'block'
-		playerTwoScore.classList.toggle('winner')
-		playerOneScore.classList.toggle('loser')
-		playerTwoBtn.disabled = true
-		playerOneBtn.disabled = true
-		playerTwoBtn.classList.toggle('disabled')
-		playerOneBtn.classList.toggle('disabled')
+	if (p2Score === maxValue && p2Score !== p1Score) {
+		stat.style.color = "white"
+		stat.innerText = "(Game Over)"
+		stat.style.display = 'block'
+		p2Display.classList.add('winner')
+		p1Display.classList.add('loser')
+		gameOver()
 	}
 })
-
 
 resetBtn.addEventListener('click', function () {
-	status.style.display = "none"
-	maxSelect.selectedIndex = 0
-	maxValue = 0
-	maxSelect.classList.remove("error")
-	firstValue = 0
-	secondValue = 0
-	playerTwoBtn.disabled = false
-	playerOneBtn.disabled = false
-	playerOneScore.innerText = "0"
-	playerTwoScore.innerText = "0"
-	playerOneScore.classList.remove('winner')
-	playerOneScore.classList.remove('loser')
-	playerTwoScore.classList.remove('winner')
-	playerTwoScore.classList.remove('loser')
-	if (playerOneBtn.classList.contains('disabled')) {
-		playerTwoBtn.classList.toggle('disabled')
-		playerOneBtn.classList.toggle('disabled')
-	}
+	reset()
+	maxValue = parseInt(maxSelect.value)
 })
+
+
+
+function lowerCheck() {
+	if (p1Score === maxValue - 1 && p2Score === maxValue - 1) {
+		stat.style.color = "white"
+		stat.innerText = "(Next Point Wins)"
+	}
+	return
+}
+
+function checkDeuce() {
+	if (p1Score === maxValue - 1 && p2Score === maxValue - 1) {
+		maxValue++
+		stat.style.color = "white"
+		stat.style.display = "block"
+		stat.innerText = "(Deuce)"
+	} else if (p1Score === maxValue - 1 || p2Score === maxValue - 1) {
+		stat.style.color = "white"
+		if (stat.innerText === "(Deuce)") {
+			stat.innerText = "(Adv.)"
+		} else {
+			stat.style.color = "white"
+			stat.innerText = "(Game Point)"
+		}
+	}
+	return
+}
+
+function reset() {
+	stat.style.color = "#111"
+	stat.innerText = "Status"
+	maxSelect.classList.remove("error")
+	p1Score = 0
+	p2Score = 0
+	p2Btn.disabled = false
+	p1Btn.disabled = false
+	p1Display.innerText = "0"
+	p2Display.innerText = "0"
+	p1Display.classList.remove('winner')
+	p1Display.classList.remove('loser')
+	p2Display.classList.remove('winner')
+	p2Display.classList.remove('loser')
+	p2Btn.classList.remove('disabled')
+	p1Btn.classList.remove('disabled')
+}
+
+function gameOver() {
+	p2Btn.disabled = true
+	p1Btn.disabled = true
+	p2Btn.classList.toggle('disabled')
+	p1Btn.classList.toggle('disabled')
+}
