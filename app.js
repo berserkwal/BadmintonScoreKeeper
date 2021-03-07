@@ -6,29 +6,18 @@ const p1Btn = document.querySelector('#player-uno')
 const p2Btn = document.querySelector('#player-dos')
 const resetBtn = document.querySelector('#reset')
 
-let maxValue = 0
+let maxValue = 7
 p1Score = 0
 p2Score = 0
 
-maxSelect.addEventListener('input', function () {
+maxSelect.addEventListener('change', function () {
 	maxValue = parseInt(maxSelect.value)
-	if (maxValue == 0) {
-		maxSelect.classList.add("error")
-		return
-	} else {
-		maxSelect.classList.remove("error")
-	}
 	reset()
 })
 
 p1Btn.addEventListener('click', function () {
-	if (maxValue == 0) {
-		maxSelect.classList.add("error")
-		return
-	}
-
 	p1Score++
-	p1Display.innerText = p1Score.toString()
+	p1Display.innerText = p1Score
 
 	if (maxValue > 7) {
 		checkDeuce()
@@ -47,13 +36,8 @@ p1Btn.addEventListener('click', function () {
 })
 
 p2Btn.addEventListener('click', function () {
-	if (maxValue == 0) {
-		maxSelect.classList.add("error")
-		return
-	}
-
 	p2Score++
-	p2Display.innerText = p2Score.toString()
+	p2Display.innerText = p2Score
 
 	if (maxValue > 7) {
 		checkDeuce()
@@ -107,19 +91,16 @@ function checkDeuce() {
 function reset() {
 	stat.style.color = "#111"
 	stat.innerText = "Status"
-	maxSelect.classList.remove("error")
 	p1Score = 0
+	p1Display.innerText = 0
 	p2Score = 0
-	p2Btn.disabled = false
+	p2Display.innerText = 0
 	p1Btn.disabled = false
-	p1Display.innerText = "0"
-	p2Display.innerText = "0"
-	p1Display.classList.remove('winner')
-	p1Display.classList.remove('loser')
-	p2Display.classList.remove('winner')
-	p2Display.classList.remove('loser')
-	p2Btn.classList.remove('disabled')
+	p2Btn.disabled = false
 	p1Btn.classList.remove('disabled')
+	p2Btn.classList.remove('disabled')
+	p1Display.classList.remove('winner', 'loser')
+	p1Display.classList.remove('winner', 'loser')
 }
 
 function gameOver() {
