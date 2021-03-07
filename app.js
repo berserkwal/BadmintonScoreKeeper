@@ -100,7 +100,7 @@ function reset() {
 	p1Btn.classList.remove('disabled')
 	p2Btn.classList.remove('disabled')
 	p1Display.classList.remove('winner', 'loser')
-	p1Display.classList.remove('winner', 'loser')
+	p2Display.classList.remove('winner', 'loser')
 }
 
 function gameOver() {
