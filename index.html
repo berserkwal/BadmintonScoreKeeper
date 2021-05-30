@@ -9,16 +9,24 @@
 	<link rel="shortcut icon" href="favicon.png" type="image/x-icon">
 	<link rel="stylesheet" href="app.css">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap"
+		rel="stylesheet">
 </head>
 
 <body>
 
 	<div class="main-card">
-		<div class="image-top"></div>
+		<div class="image-top">
+			<img src="https://images.unsplash.com/photo-1612677257608-90309859bbec?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80"
+				alt>
+		</div>
 		<div class="middle-earth">
-			<div class="score-part"><span id="player-one">0</span><span id="player-two">0</span></div>
-			<div class="status">(Status)</div>
+			<div class="score-part">
+				<span id="player-one">0</span>
+				<div class="status">(Status)</div>
+				<span id="player-two">0</span>
+			</div>
 			<form class="max-score">
 				<label for="max-select">Game length &nbsp;</label>
 				<select name="max-score" id="max-select">
@@ -36,6 +44,8 @@
 		</div>
 	</div>
 
+	<footer>Designed and developed by <a rel="noreferrer" target="_blank"
+			href="https://berserkwal.github.io">berserkwal</a></footer>
 
 	<script src="app.js"></script>
 </body>
